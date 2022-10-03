@@ -183,8 +183,6 @@ public class FileServices {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        System.out.println(jObject);
-
 
     }
 
