@@ -5,10 +5,8 @@ import java.util.Scanner;
 public class main {
     public static void main(String[] args) {
 
-
         String path;
         String selectedProperty;
-
 
         Scanner sc =new Scanner(System.in);
         Properties properties=new Properties();

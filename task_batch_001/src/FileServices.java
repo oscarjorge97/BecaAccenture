@@ -151,19 +151,19 @@ public class FileServices {
                     objectMes=objectMes=new JSONObject();
 
                     objectMes.put("year",currentYear);
-                    //csvWriter.write(currentYear);
+
 
                     Month month=Month.JANUARY.plus(i);
                     objectMes.put("name",month.toString());
-                    //csvWriter.write(month.toString());
+
 
                     String totalDays=Integer.toString(month.length(isLeapYear));
                     objectMes.put("numberofdays",totalDays);
-                    //csvWriter.write(totalDays);
+
 
                     String firstDay=String.valueOf(LocalDate.of(2022,(i+1),1).getDayOfWeek());
                     objectMes.put("firstdayofweek","primer dia del mes: "+firstDay);
-                    //csvWriter.write("Primer dia del mes: "+firstDay);
+
 
                     monthList.put(objectMes);
                 }
@@ -177,9 +177,9 @@ public class FileServices {
             }
 
             try(FileWriter fileWriter=new FileWriter(file)) {
-                fileWriter.write(jObject.toString());
+                fileWriter.write(jObject.toString()+"\n");
                 fileWriter.flush();
-                fileWriter.close();
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
