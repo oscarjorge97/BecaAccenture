@@ -16,12 +16,14 @@ public class ConverToBatchApplication {
 		String pathCSV;
 		String pathJSON;
 		String pathTXT;
+		String pathXSL;
 		String selectedProperty;
 
 		Scanner sc =new Scanner(System.in);
 		Properties properties=new Properties();
 		InputStream entrada=null;
 		FileServices services;
+
 
 		try{
 			String ficheroProperty="src//main//resources//application.properties";
@@ -30,6 +32,7 @@ public class ConverToBatchApplication {
 			properties.setProperty("txt","\\taskOscarTXT.txt");//Añadimos clave valor
 			properties.setProperty("csv","\\taskOscarCSV.csv");//Añadimos clave valor
 			properties.setProperty("json","\\taskOscarJSON.json");//Añadimos clave valor
+			properties.setProperty("poi","\\taskOscarPOI.xls");
 
 			properties.store(new FileWriter(ficheroProperty),"Archivos properties");//seleccionamos cual vamos a actualizar y añadimos su comentario
 
@@ -44,46 +47,55 @@ public class ConverToBatchApplication {
 			System.err.println(e.getMessage());
 		}
 
+		//Rutas establecidas para los archivos
+		String pathResource="\\src\\main\\resources";
+		pathTXT=System.getProperty("user.dir")+ pathResource + properties.getProperty("txt");
+		pathCSV=System.getProperty("user.dir") + pathResource + properties.getProperty("csv");
+		pathJSON=System.getProperty("user.dir") + pathResource + properties.getProperty("json");
+		pathXSL=System.getProperty("user.dir") +pathResource+properties.getProperty("poi");
 
 
 		System.out.println("seleccione el tipo de fichero que sea crear"+
 				"\n1:txt"+
 				"\n2:csv"+
 				"\n3:json"+
-				"\n4:batch");
+				"\n4:excel POI"+
+				"\no si desea convertirlo a Batch seleccione 4 o batch"+
+				"\n5:batch");
 
 		selectedProperty=sc.nextLine();
 
 		try {
-			String pathResource="\\src\\main\\resources";
 
-			pathTXT=System.getProperty("user.dir")+ pathResource + properties.getProperty("txt");
-			pathCSV=System.getProperty("user.dir") + pathResource + properties.getProperty("csv");
-			pathJSON=System.getProperty("user.dir") + pathResource + properties.getProperty("json");
-
-
+			services=new FileServices();
 			switch (selectedProperty) {
 				case "1", "txt" -> {
 
 					System.out.println(pathTXT);
-					services = new FileServices();
 					services.createFileTXT(pathTXT);
 				}
 
 				case "2", "csv" -> {
 
 					System.out.println(pathCSV);
-					services=new FileServices();
+
 					services.createFileCSV(pathCSV);
 				}
 
 				case "3", "json" -> {
 
 					System.out.println(pathJSON);
-					services=new FileServices();
+
 					services.createFileJSON(pathJSON);
 				}
-				case "4", "batch" -> {
+
+				case "4", "excel","poi"," POI" ->{
+
+					System.out.println(pathXSL);
+					services.createFileXSL(pathXSL);
+				}
+
+				case "5", "batch" -> {
 					//REVISAR TODOS LOS CASE
 
 					SpringApplication.run(ConverToBatchApplication.class, args);
